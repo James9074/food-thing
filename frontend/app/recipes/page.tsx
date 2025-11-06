@@ -52,63 +52,102 @@ export default function RecipeBuilderPage() {
   const totalCost = selected.reduce((sum, item) => sum + item.cost * item.quantity, 0);
 
   return (
-    <div className="space-y-6">
+    <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
       <Flex justify="between" align="center">
-        <div>
-          <Heading size="6">Recipe Builder</Heading>
-          <Text color="gray">Design dishes with live costing, nutrition, and allergen intelligence.</Text>
+        <div className="page-header">
+          <div className="page-title">Recipe Builder</div>
+          <div className="page-subtitle">
+            Design dishes with live costing, nutrition, and allergen intelligence
+          </div>
         </div>
-        <Button onClick={() => setOpen(true)}>Add Ingredient</Button>
+        <Button
+          onClick={() => setOpen(true)}
+          size="3"
+          style={{ background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" }}
+        >
+          + Add Ingredient
+        </Button>
       </Flex>
 
-      <Grid columns={{ initial: "1", md: "2" }} gap="5">
-        <Card>
-          <Heading size="4" className="mb-4">
+      <Grid columns={{ initial: "1", md: "2" }} gap="4">
+        <Card className="stat-card">
+          <Heading size="5" style={{ marginBottom: "1.5rem", fontWeight: 600 }}>
             Ingredient Matrix
           </Heading>
-          <Table.Root>
-            <Table.Header>
-              <Table.Row>
-                <Table.ColumnHeaderCell>Ingredient</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>Quantity</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>Unit Cost</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>Total</Table.ColumnHeaderCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {selected.map((item) => (
-                <Table.Row key={item.id}>
-                  <Table.Cell>{item.name}</Table.Cell>
-                  <Table.Cell>{item.quantity} {item.unit}</Table.Cell>
-                  <Table.Cell>${item.cost.toFixed(2)}</Table.Cell>
-                  <Table.Cell>${(item.cost * item.quantity).toFixed(2)}</Table.Cell>
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table.Root>
-          <Flex justify="between" className="mt-4">
-            <Text weight="medium">Current food cost</Text>
-            <Text weight="bold">${totalCost.toFixed(2)}</Text>
-          </Flex>
+          {selected.length === 0 ? (
+            <div style={{ textAlign: "center", padding: "3rem 1rem", color: "#64748b" }}>
+              <Text size="2">No ingredients added yet. Click "Add Ingredient" to get started.</Text>
+            </div>
+          ) : (
+            <>
+              <Table.Root>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.ColumnHeaderCell>Ingredient</Table.ColumnHeaderCell>
+                    <Table.ColumnHeaderCell>Quantity</Table.ColumnHeaderCell>
+                    <Table.ColumnHeaderCell>Unit Cost</Table.ColumnHeaderCell>
+                    <Table.ColumnHeaderCell>Total</Table.ColumnHeaderCell>
+                  </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                  {selected.map((item) => (
+                    <Table.Row key={item.id}>
+                      <Table.Cell>{item.name}</Table.Cell>
+                      <Table.Cell>{item.quantity} {item.unit}</Table.Cell>
+                      <Table.Cell>${item.cost.toFixed(2)}</Table.Cell>
+                      <Table.Cell style={{ fontWeight: 600 }}>${(item.cost * item.quantity).toFixed(2)}</Table.Cell>
+                    </Table.Row>
+                  ))}
+                </Table.Body>
+              </Table.Root>
+              <Flex
+                justify="between"
+                align="center"
+                style={{
+                  marginTop: "1.5rem",
+                  paddingTop: "1rem",
+                  borderTop: "2px solid rgba(15, 23, 42, 0.1)"
+                }}
+              >
+                <Text weight="bold" size="4">Total Food Cost</Text>
+                <Heading size="5" style={{ color: "#667eea" }}>${totalCost.toFixed(2)}</Heading>
+              </Flex>
+            </>
+          )}
         </Card>
-        <Card>
-          <Heading size="4" className="mb-4">
-            Nutrition Snapshot (per serving)
+
+        <Card className="stat-card">
+          <Heading size="5" style={{ marginBottom: "1.5rem", fontWeight: 600 }}>
+            Nutrition Snapshot
           </Heading>
+          <Text size="2" color="gray" style={{ display: "block", marginBottom: "1rem" }}>
+            Per serving estimate
+          </Text>
           <Grid columns="2" gap="3">
             {Object.entries(nutrientProfile).map(([nutrient, value]) => (
-              <Card key={nutrient} variant="surface" className="p-4 text-center">
-                <Heading size="5">{value}</Heading>
-                <Text color="gray">{nutrient}</Text>
-              </Card>
+              <div
+                key={nutrient}
+                style={{
+                  background: "linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)",
+                  padding: "1.25rem",
+                  borderRadius: "12px",
+                  textAlign: "center",
+                  border: "1px solid rgba(15, 23, 42, 0.06)"
+                }}
+              >
+                <Heading size="6" style={{ marginBottom: "0.25rem" }}>{value}</Heading>
+                <Text size="1" color="gray" style={{ textTransform: "capitalize" }}>{nutrient}</Text>
+              </div>
             ))}
           </Grid>
-          <div className="mt-4 space-y-2">
-            <Heading size="4">Dietary Flags</Heading>
-            <div className="flex gap-2">
-              <Badge color="green">Vegetarian</Badge>
-              <Badge color="amber">Contains Dairy</Badge>
-            </div>
+          <div style={{ marginTop: "1.5rem", paddingTop: "1.5rem", borderTop: "1px solid rgba(15, 23, 42, 0.06)" }}>
+            <Text size="2" weight="medium" style={{ display: "block", marginBottom: "0.75rem" }}>
+              Dietary Flags
+            </Text>
+            <Flex gap="2" wrap="wrap">
+              <Badge color="green" size="2" style={{ padding: "0.5rem 0.75rem" }}>Vegetarian</Badge>
+              <Badge color="amber" size="2" style={{ padding: "0.5rem 0.75rem" }}>Contains Dairy</Badge>
+            </Flex>
           </div>
         </Card>
       </Grid>
