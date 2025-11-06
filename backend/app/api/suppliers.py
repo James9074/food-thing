@@ -62,7 +62,7 @@ async def update_supplier(
     return supplier
 
 
-@router.delete("/{supplier_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{supplier_id}", status_code=status.HTTP_204_NO_CONTENT, response_model=None)
 async def delete_supplier(supplier_id: str, db: AsyncSession = Depends(get_db)) -> None:
     result = await db.execute(select(Supplier).where(Supplier.id == supplier_id))
     supplier = result.scalar_one_or_none()
