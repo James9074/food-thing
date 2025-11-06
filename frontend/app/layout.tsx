@@ -47,12 +47,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <span>Orders</span>
                 </Link>
               </nav>
-              <div style={{ marginTop: "auto", paddingTop: "2rem", borderTop: "1px solid rgba(15, 23, 42, 0.06)" }}>
-                <div style={{ padding: "1rem", borderRadius: "12px", background: "linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%)", fontSize: "0.875rem", color: "#64748b" }}>
-                  <div style={{ fontWeight: 600, marginBottom: "0.25rem", color: "#475569" }}>Pro Plan</div>
-                  <div>Unlimited suppliers & recipes</div>
-                </div>
-              </div>
             </aside>
             <main className="content">{children}</main>
           </div>
