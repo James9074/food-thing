@@ -3,7 +3,7 @@ import "./globals.css";
 import Link from "next/link";
 import { Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
-import { DashboardIcon, MixIcon, RocketIcon, ArchiveIcon, FileTextIcon } from "@radix-ui/react-icons";
+import { DashboardIcon, MixIcon, RocketIcon, ArchiveIcon, FileTextIcon, ComponentInstanceIcon } from "@radix-ui/react-icons";
 
 export const metadata: Metadata = {
   title: "FoodFlow - Smart Kitchen Management",
@@ -29,6 +29,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <Link className="nav-link" href="/recipes">
                   <MixIcon className="nav-icon" />
                   <span>Recipes</span>
+                </Link>
+                <Link className="nav-link" href="/ingredients">
+                  <ComponentInstanceIcon className="nav-icon" />
+                  <span>Ingredients</span>
                 </Link>
                 <Link className="nav-link" href="/suppliers">
                   <RocketIcon className="nav-icon" />
